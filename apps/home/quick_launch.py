@@ -139,8 +139,20 @@ if torun:
 	else:	
 		rbr = torun.get_attribute("reboot-before-run")
 		usb = torun.get_attribute("usb-mode")
+		hid_scls = torun.get_attribute("usb-hid-subclass")
+		hid_proto = torun.get_attribute("usb-hid-protocol")
+		hid_max_len = torun.get_attribute("usb-hid-max-packet-len")
+		hid_poll = torun.get_attribute("usb-hid-polling-interval")
+		hid_desc = torun.get_attribute("usb-hid-report-descriptor")
 		if type(rbr) == str and rbr.lower() == "true":
-			run_app.reset_and_run(torun.main_path[:-3], usb_mode=usb)
+			run_app.reset_and_run(torun.main_path[:-3],
+					usb_mode=usb,
+					hid_scls=hid_scls,
+					hid_proto=hid_proto,
+					hid_max_len=hid_max_len,
+					hid_poll=hid_poll,
+					hid_desc=hid_desc
+                        )
 		run_app.run_app(torun.main_path[:-3])
 	
 	#ugfx.area(0,0,ugfx.width(),ugfx.height(),0)

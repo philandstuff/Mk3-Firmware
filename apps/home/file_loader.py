@@ -155,8 +155,20 @@ if app_to_load:
 	import run_app
 	rbr = app_to_load.get_attribute("reboot-before-run")
 	usb = app_to_load.get_attribute("usb-mode")
+	hid_scls = app_to_load.get_attribute("usb-hid-subclass")
+	hid_proto = app_to_load.get_attribute("usb-hid-protocol")
+	hid_max_len = app_to_load.get_attribute("usb-hid-max-packet-len")
+	hid_poll = app_to_load.get_attribute("usb-hid-polling-interval")
+	hid_desc = app_to_load.get_attribute("usb-hid-report-descriptor")
 	if type(rbr) == str and rbr.lower() == "true": 
-		run_app.reset_and_run(app_to_load.main_path[:-3], usb_mode=usb)
+		run_app.reset_and_run(app_to_load.main_path[:-3],
+                                      usb_mode=usb,
+                                      hid_scls=hid_scls,
+                                      hid_proto=hid_proto,
+                                      hid_max_len=hid_max_len,
+                                      hid_poll=hid_poll,
+                                      hid_desc=hid_desc
+                )
 	run_app.run_app(app_to_load.main_path[:-3])
 	
 	

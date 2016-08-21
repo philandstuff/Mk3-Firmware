@@ -27,7 +27,17 @@ try:
         main_dict = json.loads(f.read())
         u = main_dict.get('usb_mode')
         if u:
-            pyb.usb_mode(u)
+            if 'HID' in u:
+                import binascii
+                hid_scls = main_dict.get('usb_hid_subclass', pyb.hid_mouse[0])
+                hid_proto = main_dict.get('usb_hid_protocol', pyb.hid_mouse[1])
+                hid_max_len = main_dict.get('usb_hid_max_packet_len', pyb.hid_mouse[2])
+                hid_poll = main_dict.get('usb_hid_polling_interval', pyb.hid_mouse[3])
+                hid_desc_hex = main_dict.get('usb_hid_report_descriptor', pyb.hid_mouse[4])
+                hid_desc = binascii.unhexlify(hid_desc_hex)
+                pyb.usb_mode(u, hid=(hid_scls, hid_proto, hid_max_len, hid_poll, hid_desc))
+            else:
+                pyb.usb_mode(u)
 except OSError:
     pass
 pyb.main(m)
