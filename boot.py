@@ -7,6 +7,7 @@
 import pyb
 import os
 import micropython
+import json
 
 micropython.alloc_emergency_exception_buf(100)
 
@@ -19,4 +20,14 @@ elif "apps" in os.listdir():
 		m = "apps/home/main.py"
 	elif ("app_library" in apps) and ("main.py" in os.listdir("apps/app_library")):
 		m = "apps/app_library/main.py"
+
+# must set USB mode before calling pyb.main()
+try:
+    with open('main.json', 'r') as f:
+        main_dict = json.loads(f.read())
+        u = main_dict.get('usb_mode')
+        if u:
+            pyb.usb_mode(u)
+except OSError:
+    pass
 pyb.main(m)
