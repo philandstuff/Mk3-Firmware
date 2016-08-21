@@ -21,28 +21,6 @@ def get_app_foldername(path):
 	else:
 		return s[-2]
 
-def get_app_attribute(path, attribute):
-	if not is_file(path):
-		return ""
-	rv = ""
-	attribute = attribute.lower()
-	try:
-		with open(path) as f:
-			while True:  ## ToDo: set the max lines to loop over to be 20 or so
-				l = f.readline()
-				if l.startswith("### "):
-					kv = l[4:].split(":",1)
-					if len(kv) >= 2:
-						if (kv[0].strip().lower() == attribute):
-							rv = kv[1].strip()
-							break;
-				else:
-					break
-
-	except OSError as e:
-		return ""
-	return rv
-
 def is_dir(path):
     """Checks whether a path exists and is a director"""
     try:
